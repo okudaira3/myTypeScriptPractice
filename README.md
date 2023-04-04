@@ -1,2 +1,2 @@
-# myTypeScriptPractice-
+# myTypeScriptPractice
 TypeScriptの練習用
