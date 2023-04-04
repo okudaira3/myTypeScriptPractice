@@ -1,0 +1,1 @@
+window.addEventListener("load",(function(t){document.querySelector("#target").textContent="それはしーずー"}));
