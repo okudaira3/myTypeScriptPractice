@@ -1,14 +1,27 @@
-<html>
+<html lang="ja">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Sample</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
     <script src="main.js"></script>
   </head>
   <body>
-    <h1 class="bg-primary text-white p-2">ほげほげー</h1>
-    <div class="container py-s">
-        <p class="h5" id="target">かわいいいぬ</p>
+    <h1 class="bg-primary text-white p-2">メモだよ</h1>
+    <div class="container">
+      <p class="h5">文言を入力してね</p>
+      <div class="alert alert-primary">
+        <input type="text" class="form-control" id="message" />
+        <button class="btn btn-primary mt-2" id="save-btn">保存</button>
+      </div>
+      <table class="table" id="table"></table>
+      <div class="text-center">
+        <button class="btn btn-danger mt-4" id="initial-btn">初期化</button>
+      </div>
     </div>
   </body>
 </html>
