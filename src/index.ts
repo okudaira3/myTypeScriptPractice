@@ -73,5 +73,5 @@ window.addEventListener("load", () => {
   const delBtn: HTMLButtonElement = document.querySelector("#all-delete-btn")
   delBtn.onclick = allDelete
 
-  console.log("-----start-----")
+  fetchData(firebaseUrl)
 })
