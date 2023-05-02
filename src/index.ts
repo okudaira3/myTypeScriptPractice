@@ -45,7 +45,7 @@ function fetchData(url: string) {
     .then((res) => {
       let tbody = ""
       for (let k in res) {
-        // これなにしてるの？
+        
         let item = res[k]
         // TODO ここitemのプロパティはEnumにできそう。たぶんPOSTしたときのキー名と一致してるはず
         tbody =
