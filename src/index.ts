@@ -59,6 +59,7 @@ function fetchData(url: string) {
 }
 
 window.addEventListener("load", () => {
+  // DOMを変数に追加
   message = document.querySelector("#message")
   nickname = document.querySelector("#nickname")
   tBody = document.querySelector("#table tbody")
