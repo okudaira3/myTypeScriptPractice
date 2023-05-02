@@ -42,7 +42,6 @@ function fetchData(url: string) {
     .then((res) => {
       let tbody = ""
       for (let k in res) {
-        
         let item = res[k]
         // TODO ここitemのプロパティはEnumにできそう。たぶんPOSTしたときのキー名と一致してるはず
         tbody =
@@ -64,6 +63,7 @@ window.addEventListener("load", () => {
   nickname = document.querySelector("#nickname")
   tBody = document.querySelector("#table tbody")
 
+  // ボタンにイベントを追加
   const sendBtn: HTMLButtonElement = document.querySelector("#send-btn")
   sendBtn.onclick = send
 
