@@ -1,9 +1,6 @@
-import { METHODS } from "http"
-
 let nickname: HTMLInputElement
 let message: HTMLTextAreaElement
 let tBody: HTMLTableElement
-// const firebaseUrl = "https://firsttypescriptapp.firebaseio.com/boards.json"
 const firebaseUrl = "https://firsttypescriptapp-default-rtdb.asia-southeast1.firebasedatabase.app/boards.json"
 
 function send(): void {
