@@ -3,12 +3,19 @@ let message: HTMLTextAreaElement
 let tBody: HTMLTableElement
 const firebaseUrl = "https://firsttypescriptapp-default-rtdb.asia-southeast1.firebasedatabase.app/boards.json"
 
+enum DataProperty {
+  nickname = "nickname",
+  message = "message",
+  posted = "posted",
+}
+
 function send(): void {
   const data = {
-    nickname: nickname.value,
-    message: message.value,
-    posted: new Date().getTime(),
+    [DataProperty.nickname]: nickname.value,
+    [DataProperty.message]: message.value,
+    [DataProperty.posted]: new Date().getTime(),
   }
+
   post2fireBase(firebaseUrl, data)
 }
 
@@ -43,12 +50,12 @@ function fetchData(url: string) {
       let tbody = ""
       for (let k in res) {
         let item = res[k]
-        // TODO ここitemのプロパティはEnumにできそう。たぶんPOSTしたときのキー名と一致してるはず
+
         tbody =
           ` <tr>
-                    <td> ${item["message"]}</td>
-                    <td> ${item["nickname"]}</td>
-                    <td> ${new Date(item["posted"]).toLocaleString()}</td>
+                    <td> ${item[DataProperty.message]}</td>
+                    <td> ${item[DataProperty.nickname]}</td>
+                    <td> ${new Date(item[DataProperty.posted]).toLocaleString()}</td>
                   </tr>
         ` + tbody
       }
