@@ -1,3 +1,7 @@
+import { allDelete } from "./firebase"
+import { post2fireBase } from "./firebase"
+import { fetchData } from "./firebase"
+
 let nickname: HTMLInputElement
 let message: HTMLTextAreaElement
 let tBody: HTMLTableElement
@@ -9,63 +13,43 @@ enum DataProperty {
   posted = "posted",
 }
 
-function send(): void {
+async function onSendBtnClick() {
   const data = {
     [DataProperty.nickname]: nickname.value,
     [DataProperty.message]: message.value,
     [DataProperty.posted]: new Date().getTime(),
   }
 
-  post2fireBase(firebaseUrl, data)
+  await post2fireBase(firebaseUrl, data)
+  const messages = await fetchData(firebaseUrl)
+  updateTable(messages)
 }
 
-function allDelete(): void {
-  fetch(firebaseUrl, { method: "DELETE" }).then((res) => {
-    console.log(res.statusText)
-    fetchData(firebaseUrl)
-  })
+async function onAllDeleteBtnClick() {
+  await allDelete(firebaseUrl)
+  const messages = await fetchData(firebaseUrl)
+  updateTable(messages)
 }
 
-function post2fireBase(url: string, data: object): void {
-  fetch(url, {
-    method: "POST",
-    mode: "cors",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  }).then((res) => {
-    console.log(res.statusText)
-  })
+function updateTable(messages: any) {
+  let tbody = ""
+  for (let k in messages) {
+    let item = messages[k]
 
-  // TODO: この関数内でデータの取得するの気持ち悪いから後で外に出す(ここはあくまでpostだけにしたいよね)
-  fetchData(url)
+    tbody =
+      ` <tr>
+                  <td> ${item[DataProperty.message]}</td>
+                  <td> ${item[DataProperty.nickname]}</td>
+                  <td> ${new Date(item[DataProperty.posted]).toLocaleString()}</td>
+                </tr>
+      ` + tbody
+  }
+
+  tBody.innerHTML = "" // 既存分を一旦クリア
+  tBody.innerHTML = tbody
 }
 
-// TODO: 後で分割する(この中でhtmlまで生成しているの気持ち悪いから)
-function fetchData(url: string) {
-  fetch(url)
-    .then((re) => re.json())
-    .then((res) => {
-      let tbody = ""
-      for (let k in res) {
-        let item = res[k]
-
-        tbody =
-          ` <tr>
-                    <td> ${item[DataProperty.message]}</td>
-                    <td> ${item[DataProperty.nickname]}</td>
-                    <td> ${new Date(item[DataProperty.posted]).toLocaleString()}</td>
-                  </tr>
-        ` + tbody
-      }
-
-      tBody.innerHTML = "" // 既存分を一旦クリア
-      tBody.innerHTML = tbody
-    })
-}
-
-window.addEventListener("load", () => {
+window.addEventListener("load", async () => {
   // DOMを変数に追加
   message = document.querySelector("#message")
   nickname = document.querySelector("#nickname")
@@ -73,10 +57,12 @@ window.addEventListener("load", () => {
 
   // ボタンにイベントを追加
   const sendBtn: HTMLButtonElement = document.querySelector("#send-btn")
-  sendBtn.onclick = send
+  sendBtn.onclick = onSendBtnClick
 
   const delBtn: HTMLButtonElement = document.querySelector("#all-delete-btn")
-  delBtn.onclick = allDelete
+  delBtn.onclick = onAllDeleteBtnClick
 
-  fetchData(firebaseUrl)
+  // fetchData(firebaseUrl)
+  const messages = await fetchData(firebaseUrl)
+  updateTable(messages)
 })
