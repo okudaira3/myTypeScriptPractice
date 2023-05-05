@@ -38,11 +38,3 @@ export class FireBase {
     return await response.json()
   }
 }
-
-interface FirebaseData {
-  [key: string]: {
-    nickname: string
-    message: string
-    posted: number
-  }
-}

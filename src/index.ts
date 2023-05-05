@@ -4,21 +4,21 @@ let nickname: HTMLInputElement
 let message: HTMLTextAreaElement
 let tBody: HTMLTableElement
 
+type firebaseData = {
+  nickname: string
+  message: string
+  posted: number | Date
+}
+
 const firebase = new FireBase(
   "https://firsttypescriptapp-default-rtdb.asia-southeast1.firebasedatabase.app/boards.json"
 )
 
-enum DataProperty {
-  nickname = "nickname",
-  message = "message",
-  posted = "posted",
-}
-
 async function onSendBtnClick() {
-  const data = {
-    [DataProperty.nickname]: nickname.value,
-    [DataProperty.message]: message.value,
-    [DataProperty.posted]: new Date().getTime(),
+  const data: firebaseData = {
+    nickname: nickname.value,
+    message: message.value,
+    posted: new Date().getTime(),
   }
 
   try {
@@ -49,13 +49,13 @@ async function onAllDeleteBtnClick() {
 function updateTable(messages: object) {
   let tbody = ""
   for (const k in messages) {
-    let item = messages[k]
+    let item: firebaseData = messages[k]
 
     tbody =
       ` <tr>
-          <td> ${item[DataProperty.message]}</td>
-          <td> ${item[DataProperty.nickname]}</td>
-          <td> ${new Date(item[DataProperty.posted]).toLocaleString()}</td>
+          <td> ${item.message}</td>
+          <td> ${item.nickname}</td>
+          <td> ${new Date(item.posted).toLocaleString()}</td>
         </tr>
       ` + tbody
   }
@@ -77,7 +77,6 @@ window.addEventListener("load", async () => {
   const delBtn: HTMLButtonElement = document.querySelector("#all-delete-btn")
   delBtn.onclick = onAllDeleteBtnClick
 
-  // fetchData(firebaseUrl)
   const messages = await firebase.fetchData()
   updateTable(messages)
 })
