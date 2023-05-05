@@ -16,7 +16,7 @@ export class FireBase {
     }
   }
 
-  public async post2fireBase(data: object) {
+  public async post(data: object) {
     const response = await fetch(this.firebaseUrl, {
       method: "POST",
       mode: "cors",

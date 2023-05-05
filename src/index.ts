@@ -22,7 +22,7 @@ async function onSendBtnClick() {
   }
 
   try {
-    await firebase.post2fireBase(data)
+    await firebase.post(data)
     const messages = await firebase.fetchData()
     updateTable(messages)
 
